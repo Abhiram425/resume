@@ -1,0 +1,168 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Sun,
+  Moon,
+  Mail,
+  Phone,
+  Linkedin,
+  Download,
+  GraduationCap,
+  Briefcase,
+  Award,
+  Code,
+} from "lucide-react";
+
+// === Simple local theme manager ===
+function useTheme() {
+  const [theme, setTheme] = useState(
+    typeof window !== "undefined"
+      ? localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      : "light"
+  );
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+  return { theme, setTheme };
+}
+
+const resume = {
+  name: "GANDI S T B V S S ABHIRAM",
+  email: "abhiramgandi17@gmail.com",
+  phone: "+91 7330882533",
+  linkedin: "abhiram-gandi",
+  location: "Kakinada, India",
+  profile:
+    "Artificial Intelligence student aiming to contribute technical skills and passion for AI to real-world projects while continuously learning and collaborating to deliver high-quality work.",
+  education: [
+    {
+      school: "Aditya Degree College, Kakinada, India",
+      degree: "B.Sc (Honors) — Artificial Intelligence",
+      gpa: "7.5 GPA",
+      dates: "Jun 2023 – Apr 2026",
+    },
+    {
+      school: "Pragati Junior College, Kakinada, India",
+      degree: "MPC — Math, Physics, Chemistry",
+      gpa: "62%",
+      dates: "Jun 2021 – Apr 2023",
+    },
+  ],
+  skills: {
+    languages: ["C", "Python", "SQL", "Java", "MongoDB"],
+    frameworks: ["Pandas", "NumPy", "Scikit-learn", "Matplotlib"],
+    tools: [
+      "Power BI",
+      "Excel",
+      "PowerPoint",
+      "MySQL Workbench",
+      "AI Tools",
+      "PyCharm",
+      "Jupyter Notebook",
+      "VS Code",
+    ],
+    soft: [
+      "Report Building",
+      "Storytelling",
+      "Critical Thinking",
+      "People Management",
+      "Communication",
+    ],
+    rpa: ["UiPath", "Automation Anywhere"],
+  },
+  internships: [
+    {
+      org: "Ulearn — Power BI (Short-Term)",
+      details:
+        "Hands-on with data visualization, dashboard creation, Power Query transforms, and interactive BI reporting.",
+    },
+  ],
+  projects: [
+    {
+      title: "Automated Certificate Delivery (RPA)",
+      stack: ["UiPath", "Excel", "Gmail"],
+      details:
+        "Bot extracts recipient data from Excel, updates certificates, and emails them automatically to streamline a manual process.",
+    },
+  ],
+  certifications: [
+    "MePro — Core employability skills",
+    "Microsoft — Essentials of GenAI",
+    "UiPath — Automation Implementation Methodology Fundamentals",
+    "Automation Anywhere — Essentials",
+    "Deloitte — Data Analytics Virtual Experience",
+    "Microsoft + LinkedIn — Career Essentials in Data Analysis",
+  ],
+};
+
+const Section = ({ id, icon: Icon, title, children }) => (
+  <section id={id} className="scroll-mt-24 py-12">
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.4 }}
+      className="max-w-5xl mx-auto px-4"
+    >
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 rounded-2xl bg-zinc-100 dark:bg-zinc-800 ring-1 ring-zinc-200 dark:ring-zinc-700">
+          <Icon className="w-5 h-5" />
+        </div>
+        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+      </div>
+      <div className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{children}</div>
+    </motion.div>
+  </section>
+);
+
+const Badge = ({ children }) => (
+  <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium mr-2 mb-2 bg-white/60 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-700">
+    {children}
+  </span>
+);
+
+const Anchor = ({ href, children }) => (
+  <a
+    className="underline decoration-dotted underline-offset-4 hover:decoration-solid"
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+  >
+    {children}
+  </a>
+);
+
+const NavLink = ({ href, children }) => (
+  <a
+    href={href}
+    className="px-3 py-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm"
+  >
+    {children}
+  </a>
+);
+
+export default function AbhiramPortfolio() {
+  const { theme, setTheme } = useTheme();
+
+  // derived initials for avatar
+  const initials = useMemo(
+    () =>
+      resume.name
+        .split(" ")
+        .filter(Boolean)
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2),
+    []
+  );
+
+  const handlePrint = () => window.print();
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-zinc-50 dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 dark:text-zinc-100 selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-900">
